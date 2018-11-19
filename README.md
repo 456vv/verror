@@ -8,8 +8,8 @@ type ErrTrack struct{																			// 错误跟踪
 	Err 	error																						// 原始错误
 	ErrInfo error																						// 错误行
 }
-func (T *ErrTrack) Error() string  		                                                                // 错误
-func (T *ErrTrack) String() string                                                  					// 字符
+func (T *ErrTrack) Error() string {if DefaultDebugError {return T.String()};return T.Err.Error()}		// 错误
+func (T *ErrTrack) String() string {return fmt.Sprintf("%v\n%v", T.Err, T.ErrInfo)}						// 字符
 func TrackErrorf(format string, a ...interface{}) error													// 错误处理（带格式）
 func TrackError(a interface{}) error																	// 错误处理
 func ErrorLevel(level, limit int, err error) error														// 错误处理(层次)
