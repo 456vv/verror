@@ -1,4 +1,4 @@
-# vmap [![Build Status](https://travis-ci.org/456vv/verror.svg?branch=master)](https://travis-ci.org/456vv/verror)
+# verror [![Build Status](https://travis-ci.org/456vv/verror.svg?branch=master)](https://travis-ci.org/456vv/verror)
 golang verror，支持打印出详细的错误信息。
 
 # **列表：**
