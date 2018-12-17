@@ -54,7 +54,7 @@ func ErrorLevel(level, limit int, err error) error {
 }
 
 func e(level, limit int, err error) error {
-	if err == nil {
+	if _, ok := err.(*ErrTrack); ok || err == nil {
 		return err
 	}
 	var et ErrTrack
