@@ -8,12 +8,11 @@ import (
 
 
 func Test_Error(t *testing.T){
-	e := errors.New("error")
+	e := errors.New("An error occurred")
 	err := TrackError(e)
-	if reflect.DeepEqual(e, err) {
-		t.Fatal(err)
+	if !reflect.DeepEqual(e, err) {
+		t.Fatal(err.Error())
 	}
-//	t.Log(err)
 }
 
 func Test_ErrorLevel(t *testing.T){
@@ -21,7 +20,7 @@ func Test_ErrorLevel(t *testing.T){
 	err := ErrorLevel(4,1, e)
 	err1 := ErrorLevel(4,1, err)
 	if !reflect.DeepEqual(err, err1) {
-		t.Fatal(err1)
+		t.Fatal(err1.Error())
 	}
 
 }
