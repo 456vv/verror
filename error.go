@@ -9,16 +9,32 @@ import (
 )
 
 //设置为 True，可以打印更多错误信息。包括调用函数的名和行号。
-var DefaultDebugError bool = true
+var DefaultDebugError bool = false
 
 //错误跟踪
 type ErrTrack struct{
 	Err 	error
 	ErrInfo error
 }
-func (T *ErrTrack) Error() 	string {if DefaultDebugError {return T.String()};return T.Err.Error()}
-func (T *ErrTrack) String() string {return fmt.Sprintf("%v\n%v", T.Err, T.ErrInfo)}
 
+func (T *ErrTrack) Error() 	string {
+	if(T.ErrInfo.Error() != ""){
+		return fmt.Sprintf("%v\n%v", T.Err, T.ErrInfo)
+	}
+	return T.Err.Error()
+}
+
+func (T *ErrTrack) Unwrap() error {
+	return errors.Unwrap(T.Err)
+}
+
+func (T *ErrTrack) Is(target error) bool {
+	return errors.Is(T.Err, target)
+}
+
+func (T *ErrTrack) As(target interface{}) bool {
+	return errors.As(T.Err, target)
+}
 
 //错误处理（带格式）
 //	format string		格式
@@ -54,7 +70,7 @@ func ErrorLevel(level, limit int, err error) error {
 }
 
 func e(level, limit int, err error) error {
-	if _, ok := err.(*ErrTrack); ok || err == nil {
+	if _, ok := err.(*ErrTrack); ok || err == nil || !DefaultDebugError {
 		return err
 	}
 	var et ErrTrack
