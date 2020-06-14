@@ -8,6 +8,7 @@ type ErrTrack struct{									// 错误跟踪
 	Err 	error												// 原始错误
 	ErrInfo error												// 错误行
 }
+func (T *ErrTrack) Error() 	string                              // 错误
 func (T *ErrTrack) Unwrap() error								// 上级的错误
 func (T *ErrTrack) Is(target error) bool						// 判断错误是否相等
 func (T *ErrTrack) As(target interface{}) bool					// 链路中是否包含错误target
